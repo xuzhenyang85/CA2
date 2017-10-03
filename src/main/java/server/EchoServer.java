@@ -24,16 +24,13 @@ public class EchoServer {
         clientHandlers.remove(h);
     }
     
-    public void UpdateUserList(){ 
+    public void PrintUserList(){ 
         
         String userList = "";
-        String temp = "";
         
         for (int i = 0; i < clientHandlers.size(); i++)
         {
-           temp += clientHandlers.get(i).socket.getInetAddress().toString();
-           userList = temp.replace("/", ",");
-        
+           userList += clientHandlers.get(i).clientName + ", ";
         }
         
         
@@ -44,6 +41,19 @@ public class EchoServer {
   
     };
 
+//    public void UpdateUserList(ClientHandler h){
+//        
+//        for (int i = 0; i < clientHandlers.size(); i++)
+//        {
+//            if(clientHandlers.get(i).clientName.equals("Anonym Bruger")){
+//                clientHandlers.remove(i);             
+//                break;
+//            }                  
+//        }
+//        
+//        addClientHandler(h);  
+//        
+//    }
     //Change this method to "do stuff" depending on how the message is built xxxx#YYYY
     //Right now it just echoes back, UPPERCASED
     public void echoMessageToAll(String msg) {
