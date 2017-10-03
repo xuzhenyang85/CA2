@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EchoServer {
 
-    public static int PORT = 1234;
+    public static int PORT = 8081;
     public static String IP = "127.0.0.1";
 
     private final List<ClientHandler> clientHandlers = Collections.synchronizedList(new ArrayList());
@@ -23,7 +23,37 @@ public class EchoServer {
     public void removeClientHandler(ClientHandler h) {
         clientHandlers.remove(h);
     }
+    
+    public void PrintUserList(){ 
+        
+        String userList = "";
+        
+        for (int i = 0; i < clientHandlers.size(); i++)
+        {
+           userList += clientHandlers.get(i).clientName + ", ";
+        }
+        
+        
+        for (ClientHandler clientHandler : clientHandlers)
+        {
+            clientHandler.sendMessage(userList);
+        }
+  
+    };
 
+//    public void UpdateUserList(ClientHandler h){
+//        
+//        for (int i = 0; i < clientHandlers.size(); i++)
+//        {
+//            if(clientHandlers.get(i).clientName.equals("Anonym Bruger")){
+//                clientHandlers.remove(i);             
+//                break;
+//            }                  
+//        }
+//        
+//        addClientHandler(h);  
+//        
+//    }
     //Change this method to "do stuff" depending on how the message is built xxxx#YYYY
     //Right now it just echoes back, UPPERCASED
     public void echoMessageToAll(String msg) {

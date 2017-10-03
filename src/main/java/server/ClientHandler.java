@@ -13,6 +13,7 @@ public class ClientHandler extends Thread {
         PrintWriter writer;
         Socket socket;
         EchoServer master;
+        String clientName = "Anonym Bruger";
 
         public ClientHandler(Socket socket, EchoServer master) throws IOException {
             this.socket = socket;
@@ -23,13 +24,22 @@ public class ClientHandler extends Thread {
 
         @Override
         public void run() {
-            this.master.addClientHandler(this);
+            this.master.addClientHandler(this); 
+            this.master.PrintUserList();
             String message = reader.nextLine(); //IMPORTANT blocking call
             System.out.println("Received " + message);
             while (!message.equals("stop")) {
+                
+               if(message.startsWith("LOGIN:")){
+               if (clientName.equals("Anonym Bruger")){
+                 clientName = message.substring(6, message.length());
+                   System.out.println(clientName);
+               }
+            }else{
+                
                 master.echoMessageToAll(message);
                 message = reader.nextLine();
-            }
+            }  }        
             try {
                 this.master.removeClientHandler(this);
                 socket.close();
