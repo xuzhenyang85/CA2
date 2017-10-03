@@ -1,6 +1,10 @@
+/*
+ * This class contains the logic for the client
+ */
 package client;
 
 import interfaces.IDataReady;
+import interfaces.IEchoClient;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -8,46 +12,61 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EchoClient extends Thread {
+/**
+ *
+ * @author Menja
+ */
+public class EchoClient extends Thread implements IEchoClient {
 
-  Socket socket;
-  private Scanner input;
-  private PrintWriter output;
-  private IDataReady observer;
-  private boolean keepRunning = true;
+    //Variables
+    public Socket clientSocket;
+    private Scanner input;
+    private PrintWriter output;
+    private IDataReady observer;
+    private boolean running = true;
 
-  public void addObserver(IDataReady observer) {
-    this.observer = observer;
-  }
-
-  public void closeConnection() {
-    send("stop");
-    keepRunning = false;
-  }
-
-  //This connects to the server, and start listening for incomming messages
-  public void connect(String address, int port) throws IOException {
-    socket = new Socket(address, port);
-    input = new Scanner(socket.getInputStream());
-    output = new PrintWriter(socket.getOutputStream(), true);
-    this.start();
-  }
-
-  public void send(String msg) {
-    output.println(msg);
-  }
-
-  
-  @Override
-    public void run()  { 
-    while (keepRunning) {
-      String msg = input.nextLine();
-      observer.messageReady(msg);
+    //Add observer to check if the observed object is changing (in this case the message)
+    @Override
+    public void addObserver(IDataReady observer) {
+        this.observer = observer;
     }
-    try {
-      socket.close();
-    } catch (IOException ex) {
-      Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
+
+    //Connects to the server and listen for incomming messages
+    @Override
+    public void connectToServer(String ipAddress, int port) {
+        try {
+            clientSocket = new Socket(ipAddress, port);
+            input = new Scanner(clientSocket.getInputStream());//Makes sure to take the clients input
+            output = new PrintWriter(clientSocket.getOutputStream(), true);//Returns an output for this socket
+            this.start();
+        } catch (IOException ex) {
+            Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-  }
+
+    @Override
+    public void sendMessage(String message) {
+        output.println("MSG: " + message);
+    }
+
+    @Override
+    public void closeConnection() {
+        sendMessage("Stop");
+        running = false;
+    }
+
+    //implement the run method from the Runnable class to handle the threads
+    @Override
+    public void run() {
+        while (running) {
+            String msg = input.nextLine();
+            observer.messageReady(msg);
+        }
+        try {
+            clientSocket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
