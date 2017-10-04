@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class echoForm extends javax.swing.JFrame implements IDataReady{
+public class echoForm extends javax.swing.JFrame implements IDataReady {
 
     public echoForm() {
         initComponents();
@@ -110,33 +110,28 @@ public class echoForm extends javax.swing.JFrame implements IDataReady{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     @Override
     public void messageReady(String msg) {
         jTextReceive.append(msg + "\n");
     }
-    
+
     EchoClient client;
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        if( client != null ){
+
+        if (client != null) {
             client.closeConnection();
         }
-        
+
         client = new EchoClient();
         client.addObserver(this);
-        try {
-            client.connect(jTextIP.getText(), Integer.parseInt(jTextPort.getText()));
-            
-        } catch (IOException ex) {
-            Logger.getLogger(echoForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        client.connectToServer(jTextIP.getText(), Integer.parseInt(jTextPort.getText()));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    
-        client.send(jTextSend.getText());
+
+        client.sendMessage(jTextSend.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -168,10 +163,8 @@ public class echoForm extends javax.swing.JFrame implements IDataReady{
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new echoForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new echoForm().setVisible(true);
         });
     }
 
@@ -188,5 +181,4 @@ public class echoForm extends javax.swing.JFrame implements IDataReady{
     private javax.swing.JTextField jTextSend;
     // End of variables declaration//GEN-END:variables
 
-    
 }
