@@ -46,13 +46,15 @@ public class ClientHandler extends Thread
             
             if (checkLogin())
             {
-            if (MsgParts[0].toUpperCase().equals("MSG")){
-                if(MsgParts[1].equals("*") && MsgParts[2] != null){
+            if (MsgParts[0].toUpperCase().equals("MSG") & MsgParts.length == 3){
+                if(MsgParts[1].equals("*")){
                     master.echoMessageToAll(MsgParts[2]);
+                }else{
+                    
                 }
-            }
-            }
             
+            }
+            }    
             message = reader.nextLine();  
         }
         try
