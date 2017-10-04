@@ -26,7 +26,9 @@ public class EchoServer {
     
     public void PrintUserList(){ 
         
-        String userList = "";
+        String userList = "CLIENTLIST: ";
+        
+        
         
         for (int i = 0; i < clientHandlers.size(); i++)
         {
