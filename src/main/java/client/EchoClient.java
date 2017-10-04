@@ -46,7 +46,7 @@ public class EchoClient extends Thread implements IEchoClient {
 
     @Override
     public void sendMessage(String message) {
-        output.println("MSG: " + message);
+        output.println(message);
     }
 
     @Override
