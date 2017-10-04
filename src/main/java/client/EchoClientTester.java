@@ -14,9 +14,9 @@ public class EchoClientTester {
     });
     client.connectToServer("localhost",8000);
     
-    client.sendMessage("Hello");
-    client.sendMessage("Hello World");
-    client.sendMessage("Hello Wonderfull World");
+    client.sendMessage("Hello", "");
+    client.sendMessage("Hello World", "");
+    client.sendMessage("Hello Wonderfull World", "");
     Thread.sleep(100);
     client.closeConnection();
     
