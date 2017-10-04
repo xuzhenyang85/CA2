@@ -131,7 +131,7 @@ public class echoForm extends javax.swing.JFrame implements IDataReady {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        client.sendMessage(jTextSend.getText(), "");
+        client.sendMessage(jTextSend.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

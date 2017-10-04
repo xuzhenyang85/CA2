@@ -47,7 +47,7 @@ public class EchoClient extends Thread implements IEchoClient {
     }
 
     @Override
-    public void sendMessage(String message, String user) {
+    public void sendMessage(String message) {
         output.println(user + " " + message);
     }
 
@@ -77,5 +77,7 @@ public class EchoClient extends Thread implements IEchoClient {
             Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+ 
 
 }
