@@ -54,9 +54,7 @@ public class EchoClient extends Thread implements IEchoClient {
     @Override
     public void login(String user) {
         output.println("LOGIN:" + user);
-        if (user.isEmpty()) {
-           
-        }
+     
     }
 
     @Override
