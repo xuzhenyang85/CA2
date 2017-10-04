@@ -10,13 +10,13 @@ public class EchoClientTester {
     EchoClient client = new EchoClient();
     
     client.addObserver((msg) -> {
-      System.out.println("Received a message: "+msg);
+      System.out.println("Received a message from server: "+msg);
     });
-    client.connectToServer("localhost",1234);
+    client.connectToServer("localhost",8000);
     
-    client.sendMessage("Hello");
-    client.sendMessage("Hello World");
-    client.sendMessage("Hello Wonderfull World");
+    client.sendMessage("Hello", "");
+    client.sendMessage("Hello World", "");
+    client.sendMessage("Hello Wonderfull World", "");
     Thread.sleep(100);
     client.closeConnection();
     
