@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 public class EchoClient extends Thread implements IEchoClient {
 
     //Variables
-    private String user;
     public Socket clientSocket;
     private Scanner input;
     private PrintWriter output;
@@ -48,7 +47,7 @@ public class EchoClient extends Thread implements IEchoClient {
 
     @Override
     public void sendMessage(String message) {
-        output.println(user + " " + message);
+        output.println(message);
     }
 
     @Override
@@ -68,8 +67,13 @@ public class EchoClient extends Thread implements IEchoClient {
     public void run() {
         while (running) {
             String msg = input.nextLine(); //Læser på socket fra serveren
+            String[] msgParts = msg.split(":");
+            if(msgParts[0].toUpperCase().equals("CLIENTLIST")){
+                observer.updateUserList(msgParts[1]);
+            }else{
+            
             observer.messageReady(msg);
-
+            }
         }
         try {
             clientSocket.close();

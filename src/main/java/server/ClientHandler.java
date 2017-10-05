@@ -26,20 +26,18 @@ public class ClientHandler extends Thread
     @Override
     public void run()
     {
-        this.master.addClientHandler(this);
-        String message = reader.nextLine(); //IMPORTANT blocking call
-        System.out.println("Received " + message);
-        while (!message.equals("stop"))
+        String message = reader.nextLine();
+        
+        while (!message.equals("LOGOUT:"))
         {
             String[] MsgParts = message.split(":");
             
-            System.out.println(MsgParts[0]);
-            
-            if (MsgParts[0].toUpperCase().equals("LOGIN"))
+            if (MsgParts.length == 2 & MsgParts[0].toUpperCase().equals("LOGIN"))
                 {
                     if (clientName.equals("Anonym Bruger"))
                     {
                         clientName = MsgParts[1];
+                        this.master.addClientHandler(this);
                         this.master.PrintUserList();
                     }
                 }
@@ -48,18 +46,21 @@ public class ClientHandler extends Thread
             {
             if (MsgParts[0].toUpperCase().equals("MSG") & MsgParts.length == 3){
                 if(MsgParts[1].equals("*")){
-                    master.echoMessageToAll(MsgParts[2]);
+                    master.echoMessageToAll(MsgParts[2],clientName);
                 }else{
-                    
+                    String[] userParts = MsgParts[1].split(",");                  
+                    master.privateMessage(userParts, MsgParts[2], clientName);                           
                 }
             
             }
-            }    
+            }
+                        
             message = reader.nextLine();  
         }
         try
         {
             this.master.removeClientHandler(this);
+            this.master.PrintUserList();
             socket.close();
         } catch (IOException ex)
         {

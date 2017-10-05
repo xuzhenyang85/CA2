@@ -9,9 +9,9 @@ public class EchoClientTester {
   public static void main(String[] args) throws IOException, InterruptedException {
     EchoClient client = new EchoClient();
     
-    client.addObserver((msg) -> {
-      System.out.println("Received a message from server: "+msg);
-    });
+//    client.addObserver((msg) -> {
+//      System.out.println("Received a message from server: "+msg);
+//    });
     client.connectToServer("localhost",8000);
     
     client.sendMessage("Hello");
