@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class EchoServer {
 
     public static int PORT = 8081;
@@ -23,24 +22,17 @@ public class EchoServer {
     public void removeClientHandler(ClientHandler h) {
         clientHandlers.remove(h);
     }
-    
-    public void PrintUserList(){ 
-        
+
+    public void PrintUserList() 
+    {
         String userList = "CLIENTLIST: ";
-        
-        
-        
-        for (int i = 0; i < clientHandlers.size(); i++)
-        {
-           userList += clientHandlers.get(i).clientName + ", ";
+
+        for (int i = 0; i < clientHandlers.size(); i++) {
+            userList += clientHandlers.get(i).clientName + ", ";
         }
-        
-        
-        for (ClientHandler clientHandler : clientHandlers)
-        {
-            clientHandler.sendMessage(userList);
+        for (ClientHandler clientHandler : clientHandlers) {
+            clientHandler.sendMessage(clientHandler.clientName,userList);
         }
-  
     };
 
 //    public void UpdateUserList(ClientHandler h){
@@ -58,13 +50,14 @@ public class EchoServer {
 //    }
     //Change this method to "do stuff" depending on how the message is built xxxx#YYYY
     //Right now it just echoes back, UPPERCASED
-    public void echoMessageToAll(String msg) {
+    public void echoMessageToAll(String fromClient, String msg) {
         String toSend = msg.toUpperCase();
-        clientHandlers.forEach((h) -> {
-            h.sendMessage(toSend);
+        clientHandlers.forEach((h) -> 
+        {
+            h.sendMessage(fromClient,toSend);
         });
     }
-
+    
     public void listenForClients() throws IOException {
         ServerSocket serverSocket = new ServerSocket();
         serverSocket.bind(new InetSocketAddress(IP, PORT));
@@ -81,5 +74,18 @@ public class EchoServer {
         }
         System.out.println(String.format("Server Startet, bound to: %s. Listening on: %d", IP, PORT));
         new EchoServer().listenForClients();
+    }
+    
+    public void echoMessageToClient(String msg, String toClient, String fromClient){
+        
+        String toSend = msg.toUpperCase();
+        
+        clientHandlers.forEach((h) ->
+        {
+            if(h.clientName.equalsIgnoreCase(toClient))
+            {
+                h.sendMessage(fromClient,toSend);
+            }
+        });
     }
 }

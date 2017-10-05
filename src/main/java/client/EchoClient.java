@@ -1,6 +1,3 @@
-/*
- * This class contains the logic for the client
- */
 package client;
 
 import interfaces.IDataReady;
@@ -12,10 +9,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Menja
- */
 public class EchoClient extends Thread implements IEchoClient {
 
     //Variables
@@ -48,12 +41,12 @@ public class EchoClient extends Thread implements IEchoClient {
 
     @Override
     public void sendMessage(String message) {
-        output.println(user + " " + message);
+        output.println(message);
     }
 
     @Override
     public void login(String user) {
-        output.println("LOGIN:" + user);
+        output.println("" + user);
      
     }
 

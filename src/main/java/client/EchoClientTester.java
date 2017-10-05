@@ -12,11 +12,11 @@ public class EchoClientTester {
     client.addObserver((msg) -> {
       System.out.println("Received a message from server: "+msg);
     });
-    client.connectToServer("localhost",8000);
+    client.connectToServer("127.0.0.1",8081);
     
-    client.sendMessage("Hello");
-    client.sendMessage("Hello World");
-    client.sendMessage("Hello Wonderfull World");
+    client.sendMessage("LOGIN:AAA");
+    client.sendMessage("LOGIN:BBB");
+    client.sendMessage("MSG:BBB:Hello");
     Thread.sleep(100);
     client.closeConnection();
     
