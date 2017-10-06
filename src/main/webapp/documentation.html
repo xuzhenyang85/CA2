@@ -11,9 +11,67 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Documentation</div>
+        <h1>Documentation</h1>
+        <h2>Documentation for tests against other groups:</h2>
+        
+        <p>Efter at have deployet vores server på en Digital Ocean droplet, fik vi gruppe 4 til at teste
+            vores server med deres client.</p>
+        
+        <p>Vi testede med både telnet, samt deres GUI client, og alt virkede fint med både en og flere clients connected.</p>
+        
+        <h2>How to use GUI 2</h2>
+        <ol>
+            <li>Open the Download GUI client 2</li>
+            <li>Type in the IP-address you want to connects to</li>
+            <li>In the login-field type: LOGIN:username</li>
+            <li>Click connect</li>
+            <li>Write to ALL: In the message field type: MSG:*:message</li>
+            <li>Write to one client In the message field type: MSG:username:message</li>
+            <li>Write to multiple clients: In the message field type: MSG:username,username,username:message</li>
+            <li>The clientlist will be visible for all users with the new logged on clients</li>
+            <li>Leave the chat: In the message field type: LOGOUT: </li>
+            <li>The clientlist will be visible for all users with the active users</li>
+        </ol>
+        <img src="img/GUI2.png" alt=""/><br/>
+        <h2>How to use GUI 1</h2>
+        <ol>
+            <li>Open the Download GUI client 1</li>
+            <li>Type in the IP-address you want to connects to</li>
+            <li>In the login-field type: username</li>
+            <li>Click connect</li>
+            <li>Write to ALL: In the message field type: msg:*:message</li>
+            <li>Write to one client In the message field type: msg:username:message</li>
+            <li>Write to multiple clients: In the message field type: msg:username,username,username:message</li>
+            <li>Connected clients will be shown in the list on the right</li>
+            <li>Leave the chat: In the message field type: LOGOUT: </li>
+        </ol>
+        <img src="img/GUI1.png" alt=""/><br>
         
         
+        <h2>Who did what</h2>
+            <p>In the beginning we splitted up the assignment so Xu and Lasse was working at the server part and Dogan and Menja was working at the client</p>
+            <p>But later we all worked at all parts of the program</p>
+            <p>The assignment was to small too split</p>
+            <p>But the assignment was not easy even though it was too small to split up</p>
+        
+            
+        <h1>The design of the system</h1>
+
+            <h3>Klient</h3>
+            <p>Vi har bygget klienten ud fra et interface for at undgå blocking.</p>
+            <p>Den består af tre dele: GUI(JFrame), Client class, interface</p>
+            <p>IDataReady interface: observer som hjælper GUI'en med at observere om der er ændringer i client classen (som kommer fra serveren)</p>
+            <p>Client classen extends Thread, og kører uafhængigt af GUI'en for ikke at blokerer den </p>
+            <p>Derudover håndterer client class forbindelsen (socket) samt behandler input fra severen</p>
+
+
+            <h3>Server</h3>
+            <p>Serveren er opbygget i 2 dele: en server class file(main), client handler som også extends Threads for at flere klienter kan kører på samme tid</p>
+            <p>Server class file bruger en synchronized list til at håndtere class handler objekterne (de forskellige forbindelser)</p>
+            <p>Hver gang der oprettes en ny socket(ny forbindelse fra klienten), oprettes der også en ny tråd.</p>
+            <p>Dette er ikke hensigtsmæssigt i forhold til større chatprogrammer, men for denne opgave virker det fint.</p>
+            <p>Man kan løse dette med Thread Pools, som bruges til at håndtere mange threads af gangen</p>
+            
         <a href="index.html">Tilbage</a>
     </body>
 </html>

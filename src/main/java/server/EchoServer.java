@@ -12,7 +12,7 @@ public class EchoServer
 {
 
     public static int PORT = 8081;
-    public static String IP = "127.0.0.1";
+    public static String IP = "46.101.109.188";
 
     private final List<ClientHandler> clientHandlers = Collections.synchronizedList(new ArrayList());
 
