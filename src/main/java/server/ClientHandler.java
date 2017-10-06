@@ -28,7 +28,7 @@ public class ClientHandler extends Thread
     {
         String message = reader.nextLine();
         
-        while (!message.equals("LOGOUT:"))
+        while (!message.toUpperCase().equals("LOGOUT:"))
         {
             String[] MsgParts = message.split(":");
             
